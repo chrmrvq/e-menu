@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: glow 5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .header p {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #ddd;
+            opacity: 0.8;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            gap: 25px;
+        }
+
+        /* MENU CARD */
+        .menu {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu:hover::before {
+            opacity: 1;
+        }
+        .header::before,
+        .menu::before {
+            pointer-events: none;
+        }
+
+        .menu img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .menu:hover img {
+            transform: scale(1.05);
+        }
+
+        .menu h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .menu p {
+            font-size: 16px;
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        /* CONTROLS */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            padding: 8px 15px;
+        }
+
+        .controls span {
+            font-size: 20px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .controls button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ffcc00, #ff9900);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .controls button:hover {
+            background: linear-gradient(135deg, #ff9900, #ff6600);
+            transform: scale(1.1);
+        }
+
+        .controls button:active {
+            transform: scale(0.95);
+        }
+
+        /* CART */
+        #cart {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        #cart:hover {
+            transform: translateY(-5px);
+        }
+
+        #cart h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #cartItems {
+            margin-bottom: 20px;
+        }
+
+        #cartItems p {
+            font-size: 16px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #cartItems strong {
+            display: block;
+            text-align: right;
+            font-size: 18px;
+            margin-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+        }
+
+        /* ORDER BUTTON */
+        #orderBtn {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(18, 140, 126, 0.4);
+        }
+
+        #orderBtn:hover {
+            background: linear-gradient(135deg, #128C7E, #075E54);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(18, 140, 126, 0.6);
+        }
+
+        #orderBtn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>🍜 E-Menu</h1>
+        <p>Pesan cepat • Tanpa ribet • Nikmati sekarang!</p>
+    </div>
+
+    <div class="container">
+
+        <div class="menu">
+            <img src="Gambar Indomie.jpg" alt="Indomie">
+            <h3>Indomie Goreng Spesial</h3>
+            <p>Rp5.000</p>
+            <div class="controls">
+                <button onclick="ubahJumlah('Indomie', -1, 5000)">−</button>
+                <span id="Indomie">0</span>
+                <button onclick="ubahJumlah('Indomie', 1, 5000)">+</button>
+            </div>
+        </div>
+
+        <div class="menu">
+            <img src="Gambar Es Teh.jpg" alt="Es Teh">
+            <h3>Es Teh Manis Segar</h3>
+            <p>Rp3.000</p>
+            <div class="controls">
+                <button onclick="ubahJumlah('Es Teh', -1, 3000)">−</button>
+                <span id="Es Teh">0</span>
+                <button onclick="ubahJumlah('Es Teh', 1, 3000)">+</button>
+            </div>
+        </div>
+
+        <!-- Tambahkan lebih banyak menu jika diperlukan untuk ekspansi -->
+
+        <div id="cart">
+            <h3>🛒 Pesanan Anda</h3>
+            <div id="cartItems">Belum ada pesanan</div>
+            <button id="orderBtn" onclick="pesanWA()">Pesan via WhatsApp</button>
+        </div>
+
+    </div>
+
+    <script>
+        const cart = {};
+
+        function ubahJumlah(nama, perubahan, harga) {
+            if (!cart[nama]) {
+                cart[nama] = { qty: 0, harga: harga };
+            }
+
+            cart[nama].qty += perubahan;
+            if (cart[nama].qty < 0) cart[nama].qty = 0;
+
+            document.getElementById(nama).innerText = cart[nama].qty;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartDiv = document.getElementById("cartItems");
+            cartDiv.innerHTML = "";
+            let total = 0;
+            let adaItem = false;
+
+            for (let item in cart) {
+                if (cart[item].qty > 0) {
+                    adaItem = true;
+                    const subtotal = cart[item].qty * cart[item].harga;
+                    total += subtotal;
+                    cartDiv.innerHTML += `<p>${item} <span>(${cart[item].qty}) — Rp${subtotal.toLocaleString()}</span></p>`;
+                }
+            }
+
+            if (!adaItem) {
+                cartDiv.innerHTML = "Belum ada pesanan";
+            } else {
+                cartDiv.innerHTML += `<strong>Total: Rp${total.toLocaleString()}</strong>`;
+            }
+        }
+
+        function pesanWA() {
+            let pesan = "Halo, saya mau pesan:%0A";
+            let adaItem = false;
+
+            for (let item in cart) {
+                if (cart[item].qty > 0) {
+                    adaItem = true;
+                    pesan += `- ${item} (${cart[item].qty})%0A`;
+                }
+            }
+
+            if (!adaItem) {
+                alert("Pilih menu terlebih dahulu!");
+                return;
+            }
+
+            const nomorWA = "6285129970233";
+            window.open(`https://wa.me/${nomorWA}?text=${pesan}`, "_blank");
+        }
+    </script>
+
+</body>
+</html>
